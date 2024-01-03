@@ -61,6 +61,21 @@ public class jdbc_example {
         System.out.println("Driver Name = " + dbMetadata.getDriverName());
         System.out.println("Driver Version = " + dbMetadata.getDriverVersion());
 
+        //get resultset object metadata
+        ResultSetMetaData rsMetadata = resultSet.getMetaData();
+
+        //how many columns we have
+        int colCount = rsMetadata.getColumnCount();
+        System.out.println(colCount);
+
+        //column names
+        System.out.println(rsMetadata.getColumnName(1));
+        System.out.println(rsMetadata.getColumnName(2));
+
+        //print all the column name dynamically
+        for(int i=1; i<=colCount; i++){
+            System.out.println(rsMetadata.getColumnName(i));
+        }
         //close all connections
         resultSet.close();
         statement.close();
