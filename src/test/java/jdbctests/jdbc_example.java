@@ -52,6 +52,14 @@ public class jdbc_example {
         //run the query and get the result in resultset object
         ResultSet resultSet = statement.executeQuery("select * from departments");
 
+        //get Database Metadata
+        DatabaseMetaData dbMetadata = connection.getMetaData();
+
+        System.out.println("User = " + dbMetadata.getUserName());
+        System.out.println("Database Product Name = " + dbMetadata.getDatabaseProductName());
+        System.out.println("Database Product Version = " + dbMetadata.getDatabaseProductVersion());
+        System.out.println("Driver Name = " + dbMetadata.getDriverName());
+        System.out.println("Driver Version = " + dbMetadata.getDriverVersion());
 
         //close all connections
         resultSet.close();
