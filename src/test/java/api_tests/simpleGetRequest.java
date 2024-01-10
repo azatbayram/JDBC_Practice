@@ -1,7 +1,9 @@
 package api_tests;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class simpleGetRequest {
@@ -23,5 +25,18 @@ public class simpleGetRequest {
         When user sends get request to regions endpoint
         Then response status code must be 200
         And body is json format
-         */
+
+     */
+
+    @Test
+    public void test2(){
+        Response response = RestAssured.given().accept(ContentType.JSON)
+                .when().get(ctURL);
+        //verify status code is 200
+        Assert.assertEquals(response.statusCode(), 200,"Verify status code is 200");
+
+        //verify content type
+        String expectedContentType = "application/json;charset=UTF-8";
+        Assert.assertEquals(response.contentType(), expectedContentType, "Verify content type is as expected");
+    }
 }
