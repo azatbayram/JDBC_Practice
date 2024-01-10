@@ -63,6 +63,5 @@ public class SpartanGetRequest {
         //System.out.println(response.headers().toString());
         Assert.assertEquals(response.body().asString(), "Hello from Sparta");
 
-
     }
 }
