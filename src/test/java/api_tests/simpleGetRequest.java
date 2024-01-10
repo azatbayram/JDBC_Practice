@@ -39,4 +39,12 @@ public class simpleGetRequest {
         String expectedContentType = "application/json;charset=UTF-8";
         Assert.assertEquals(response.contentType(), expectedContentType, "Verify content type is as expected");
     }
+
+    @Test
+    public void test3(){
+        RestAssured.given().accept(ContentType.JSON)
+                .when().get(ctURL).then()
+                .assertThat().statusCode(200)
+                .and().assertThat().contentType("application/json;charset=UTF-8");
+    }
 }
