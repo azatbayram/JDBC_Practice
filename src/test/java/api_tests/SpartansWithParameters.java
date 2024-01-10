@@ -28,4 +28,19 @@ public class SpartansWithParameters {
         assertTrue(response.body().asString().contains("Blythe"));
 
     }
+
+    @Test
+    public void getSpartanId_Negative_PathParam(){
+
+        Response response = given().accept(ContentType.JSON)
+                .and().pathParam("id", 5)
+                .when().get("/api/spartans/{id}");
+
+        assertEquals(response.statusCode(), 404);
+
+        assertEquals(response.contentType(), "application/json; charset=UFT-8");
+
+        assertTrue(response.body().asString().contains("Spartan Not Found"));
+
+    }
 }
