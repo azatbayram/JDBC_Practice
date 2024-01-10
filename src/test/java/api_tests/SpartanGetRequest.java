@@ -1,7 +1,9 @@
 package api_tests;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class SpartanGetRequest {
@@ -24,6 +26,16 @@ public class SpartanGetRequest {
     And content should be application/json; charset=UFT-8
     And json body should contain Fidole
      */
+    @Test
+    public void test2(){
 
+        Response response = RestAssured.given().accept(ContentType.JSON)
+                .when().get("/api/spartans/3");
 
+        Assert.assertEquals(response.statusCode(), 200);
+
+        Assert.assertEquals(response.contentType(), "application/json; charset=UFT-8");
+
+        Assert.assertTrue(response.body().asString().contains("Fidole"));
+    }
 }
