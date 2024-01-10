@@ -43,4 +43,22 @@ public class SpartansWithParameters {
         assertTrue(response.body().asString().contains("Spartan Not Found"));
 
     }
+
+    @Test
+    public void positiveTestWithQueryParam(){
+
+        Response response = given().contentType(ContentType.JSON)
+                .and().queryParam("gender", "Female")
+                .and().queryParam("nameContains", "e")
+                .when().get("/api/spartans/search");
+
+        assertEquals(response.statusCode(), 200);
+
+        assertEquals(response.contentType(), "application/json");
+
+        assertTrue(response.body().asString().contains("Female"));
+
+        assertTrue(response.body().asString().contains("Janette"));
+
+    }
 }
