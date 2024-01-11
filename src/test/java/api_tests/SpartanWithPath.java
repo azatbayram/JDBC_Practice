@@ -5,6 +5,8 @@ import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
@@ -64,4 +66,39 @@ public class SpartanWithPath {
 
 
     }
+
+    @Test
+    public void getAllSpartanWithPath() {
+        Response response = given().accept(ContentType.JSON)
+                .when().get("/api/spartans");
+
+        //verify status code
+        assertEquals(response.statusCode(), 200);
+        //verify content type
+        assertEquals(response.contentType(), "application/json");
+
+        //System.out.println(response.path("id[0]").toString());
+
+        int firstID = response.path("id[0]");
+        System.out.println("firstID = " + firstID);
+
+        String firstName = response.path("name[0]");
+        System.out.println("firstName = " + firstName);
+
+        String lastFirstName = response.path("name[-1]");
+        System.out.println("lastFirstName = " + lastFirstName);
+
+        int lastID = response.path("id[-1]");
+        System.out.println("lastID = " + lastID);
+
+        //print all names of spartans
+        List<String> names = response.path("name");
+        System.out.println("names = " + names);
+
+        List<Object> phones = response.path("phone");
+        for (Object ph : phones) {
+            System.out.println(ph);
+        }
+    }
+
 }
