@@ -8,6 +8,9 @@ import static org.testng.Assert.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SpartansWithParameters {
 
     @BeforeClass
@@ -50,6 +53,27 @@ public class SpartansWithParameters {
         Response response = given().contentType(ContentType.JSON)
                 .and().queryParam("gender", "Female")
                 .and().queryParam("nameContains", "e")
+                .when().get("/api/spartans/search");
+
+        assertEquals(response.statusCode(), 200);
+
+        assertEquals(response.contentType(), "application/json");
+
+        assertTrue(response.body().asString().contains("Female"));
+
+        assertTrue(response.body().asString().contains("Janette"));
+
+    }
+
+    @Test
+    public void positiveTestWithQueryParamWithMap(){
+
+        Map<String , Object> queryMap=new HashMap<>();
+        queryMap.put("gender","Female");
+        queryMap.put("nameContains", "e");
+
+        Response response = given().contentType(ContentType.JSON)
+                .and().queryParams(queryMap)
                 .when().get("/api/spartans/search");
 
         assertEquals(response.statusCode(), 200);
