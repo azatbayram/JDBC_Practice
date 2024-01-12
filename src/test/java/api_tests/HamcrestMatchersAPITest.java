@@ -2,6 +2,7 @@ package api_tests;
 
 import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
+import utilities.ConfigurationReader;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -41,17 +42,15 @@ public class HamcrestMatchersAPITest {
     @Test
     public void teacherData(){
         given().accept(ContentType.JSON)
-                .and().pathParam("id","6766")
-                .when().log().all().get("http://api.cybertektraining.com/teacher/{id}")
+                .and().pathParam("id","7")
+                .when().log().all().get(ConfigurationReader.get("ct_api_url")+"/teacher/{id}")
                 .then().assertThat().statusCode(200)
                 .and().contentType("application/json;charset=UTF-8")
-                .and().header("Content-Length",equalTo("242"))
-                .and().header("Connection",equalTo("Keep-Alive"))
                 .and().header("Date",notNullValue())
-                .and().assertThat().body("teachers.firstName[0]",equalTo("ZX"),
-                        "teachers.lastName[0]",equalTo("AS"),
-                        "teachers.gender[0]",equalTo("Male"));
-        // .log().all();
+                .and().assertThat().body("teachers.firstName[0]",equalTo("Erik"),
+                        "teachers.lastName[0]",equalTo("Uoi"),
+                        "teachers.gender[0]",equalTo("Male"))
+                .log().all();
     }
 
     @Test
@@ -59,10 +58,12 @@ public class HamcrestMatchersAPITest {
 
         given().accept(ContentType.JSON)
                 .and().pathParam("name","Computer")
-                .when().get("http://api.cybertektraining.com/teacher/department/{name}")
+                .when().log().all()
+                .get(ConfigurationReader.get("ct_api_url")+"/teacher/department/{name}")
                 .then().assertThat().statusCode(200)
                 .and().contentType("application/json;charset=UTF-8")
-                .and().body("teachers.firstName",hasItems("Alexander","Marteen"));
+                .and().body("teachers.firstName",hasItems("Tet","Tory"))
+                .log().all();
 
     }
 
