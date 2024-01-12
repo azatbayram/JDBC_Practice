@@ -38,4 +38,21 @@ public class HamcrestMatchersAPITest {
 
     }
 
+    @Test
+    public void teacherData(){
+        given().accept(ContentType.JSON)
+                .and().pathParam("id","6766")
+                .when().log().all().get("http://api.cybertektraining.com/teacher/{id}")
+                .then().assertThat().statusCode(200)
+                .and().contentType("application/json;charset=UTF-8")
+                .and().header("Content-Length",equalTo("242"))
+                .and().header("Connection",equalTo("Keep-Alive"))
+                .and().header("Date",notNullValue())
+                .and().assertThat().body("teachers.firstName[0]",equalTo("ZX"),
+                        "teachers.lastName[0]",equalTo("AS"),
+                        "teachers.gender[0]",equalTo("Male"));
+        // .log().all();
+    }
+
+
 }
