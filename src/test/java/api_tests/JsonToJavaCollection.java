@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import utilities.ConfigurationReader;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import static io.restassured.RestAssured.baseURI;
@@ -31,6 +32,9 @@ public class JsonToJavaCollection {
 
         String name = (String) jsonDataMap.get("name");
         assertEquals(name, "Meta");
+
+        BigDecimal phone=new BigDecimal(String.valueOf(jsonDataMap.get("phone")));
+        System.out.println("phone = " + phone);
 
     }
 
