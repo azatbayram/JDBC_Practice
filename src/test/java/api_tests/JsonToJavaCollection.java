@@ -10,8 +10,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 import static org.testng.Assert.*;
 public class JsonToJavaCollection {
 
@@ -56,6 +55,27 @@ public class JsonToJavaCollection {
         //save spartan 3 in a map
         Map<String,Object> spartan3=allSpartanList.get(2);
         System.out.println(spartan3);
+
+    }
+
+    @Test
+    public void regionToMap(){
+
+        Response response = when().get("http://3.85.214.90:1000/ords/hr/regions");
+        assertEquals(response.statusCode(),200);
+
+        //we de-serialize Json response to Map
+        Map<String,Object> regionMap=response.body().as(Map.class);
+
+        System.out.println(regionMap.get("count"));
+        System.out.println(regionMap.get("hasMore"));
+        System.out.println(regionMap.get("items"));
+
+        List<Map<String,Object>> itemsList=(List<Map<String,Object>>)regionMap.get("items");
+        //print first region name
+        System.out.println(itemsList.get(0).get("region_name"));
+
+
 
     }
 
