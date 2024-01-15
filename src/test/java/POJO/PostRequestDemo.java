@@ -95,4 +95,28 @@ public class PostRequestDemo {
 
     }
 
+    @Test
+    public void postNewSpartan3(){
+
+        Spartan spartanEU=new Spartan();
+        spartanEU.setName("Michael");
+        spartanEU.setGender("Male");
+        spartanEU.setPhone(8877445596l);
+
+        given().log().all().accept(ContentType.JSON)
+                .and().contentType(ContentType.JSON)
+                .body(spartanEU)
+                .when().post("/api/spartans")
+                .then().log().all()
+                .statusCode(201).and()
+                .contentType("application/json").and()
+                .body("success", equalTo("A Spartan is Born!"),
+                        "data.name",equalTo("Michael"),
+                        "data.gender",equalTo("Male"),
+                        "data.phone",equalTo(8877445596l));
+
+    }
+
+
+
 }
