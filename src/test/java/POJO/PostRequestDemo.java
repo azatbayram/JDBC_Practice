@@ -6,6 +6,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import utilities.ConfigurationReader;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 import static org.testng.Assert.*;
@@ -67,8 +70,28 @@ public class PostRequestDemo {
         assertEquals(gender,"Male");
         assertEquals(phone,8877445596l);
 
+    }
 
+    @Test
+    public void postNewSpartan2(){
 
+        //create a map to keep request json body information
+        Map<String, Object> requestMap=new HashMap<>();
+        //adding value that we want to post
+        requestMap.put("name","Steven");
+        requestMap.put("gender","Male");
+        requestMap.put("phone",8877445596l);
+
+        given().log().all().accept(ContentType.JSON).and().contentType(ContentType.JSON)
+                .body(requestMap)
+                .when().post("/api/spartans")
+                .then().log().all()
+                .statusCode(201).and()
+                .contentType("application/json").and()
+                .body("success", equalTo("A Spartan is Born!"),
+                        "data.name",equalTo("Steven"),
+                        "data.gender",equalTo("Male"),
+                        "data.phone",equalTo(8877445596l));
 
     }
 
