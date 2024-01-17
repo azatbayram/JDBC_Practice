@@ -52,4 +52,32 @@ public class PutRequestDemo {
         response.prettyPrint();
     }
 
+    @Test
+    public void patchTest(){
+
+        Map<String, Object> patchRequestBody = new HashMap<>();
+        patchRequestBody.put("name", "AB");
+
+        given().log().all()
+                .contentType(ContentType.JSON)
+                .and()
+                .pathParam("id", 90)
+                .and()
+                .body(patchRequestBody)
+                .when()
+                .patch("/api/spartan/{id}")
+                .then().log().all()
+                .assertThat().statusCode(204);
+
+        //send get request to verify body
+        Response response = given().accept(ContentType.JSON)
+                .pathParam("id",90)
+                .when()
+                .get("/api/spartans/{id}");
+
+        assertEquals(response.statusCode(),200);
+        response.prettyPrint();
+
+    }
+
 }
