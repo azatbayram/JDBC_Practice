@@ -38,7 +38,7 @@ public class PutRequestDemo {
                 .when()
                 .put("/api/spartan/{id}")
                 .then().log().all()
-                .assertThat().statusCode(201);
+                .assertThat().statusCode(204);
 
         System.out.println("========================================================");
 
